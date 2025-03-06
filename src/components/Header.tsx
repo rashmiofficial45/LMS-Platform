@@ -1,11 +1,16 @@
-import React from 'react'
+import React from "react";
+import { Button } from "./ui/button";
+import { ModeToggle } from "./DarkModeToggle";
 
-type Props = {}
+type Props = {};
 
 const Header = (props: Props) => {
   return (
-    <div>Header</div>
-  )
-}
+    <div>
+      <Button>Click Me</Button>
+      <ModeToggle />
+    </div>
+  );
+};
 
-export default Header
+export default Header;

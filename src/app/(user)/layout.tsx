@@ -17,9 +17,6 @@ export default function RootLayout({
       <div className="flex flex-col min-h-screen">
         <Header/>
         <main className="flex-1">{children}</main>
-        <footer className="bg-gray-900 text-white p-4">
-          <p>© 2023 Your Company. All rights reserved.</p>
-        </footer>
       </div>
     </ClerkProvider>
   );

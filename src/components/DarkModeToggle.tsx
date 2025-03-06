@@ -7,26 +7,35 @@ import { Button } from "@/components/ui/button";
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
 
-  // Toggle the theme: if current is dark, set to light; otherwise, set to dark.
+  // Set mounted flag after the component is mounted on the client.
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
+  // Avoid rendering theme-dependent UI until after the client has mounted.
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="sm"
       onClick={toggleTheme}
-      className="relative"
+      className="relative md:border-1"
     >
-      {/* Sun icon: visible in light mode */}
-      {theme === "light" && (
+      {theme === "light" ? (
         <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all duration-300" />
-      )}
-      {theme === "dark" && (
+      ) : (
         <Moon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-100 transition-all duration-300" />
       )}
+      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 }

@@ -77,17 +77,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Theme Toggle */}
-      {/* <button
-        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        className="fixed top-4 right-4 p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors duration-300 z-50"
-      >
-        {theme === "dark" ? (
-          <Sun className="h-5 w-5" />
-        ) : (
-          <Moon className="h-5 w-5" />
-        )}
-      </button> */}
 
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center px-4">

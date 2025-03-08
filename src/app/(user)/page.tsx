@@ -13,8 +13,6 @@ import {
   Code2,
   GraduationCap,
   Users,
-  Moon,
-  Sun,
   ArrowRight,
 } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -64,7 +62,6 @@ const courses = [
 ];
 
 export default function Home() {
-  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

@@ -31,11 +31,10 @@ export function ModeToggle() {
       className="relative md:border-1"
     >
       {theme === "light" ? (
-        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all duration-300" />
+        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-120 md:scale-110" />
       ) : (
-        <Moon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-100 transition-all duration-300" />
+        <Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-120 md:scale-110" />
       )}
-      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 }

@@ -15,9 +15,7 @@ import {
   Users,
   ArrowRight,
 } from "lucide-react";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-
 const features = [
   {
     icon: <BookOpen className="h-6 w-6" />,
@@ -74,7 +72,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background">
-
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center px-4">
         <div className="max-w-5xl mx-auto">

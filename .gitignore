@@ -45,3 +45,6 @@ next-env.d.ts
 
 # LMS Platform documentation and configuration with visualizations(#tldraw sdk)
 *.tldr
+
+# sanity deployment
+dist

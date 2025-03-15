@@ -1,10 +1,10 @@
 "use client";
 
+import { CourseCard } from "@/components/CourseCard";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -46,17 +46,47 @@ const courses = [
     title: "Web Development Fundamentals",
     description: "Master HTML, CSS, and JavaScript basics",
     price: "$99",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop",
+    author: {
+      name: "Sarah Johnson",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80",
+      role: "Senior Web Developer"
+    },
+    progress: 0,
+    totalLessons: 24,
+    completedLessons: 0,
+    docsUrl: "https://docs.example.com/web-fundamentals"
   },
   {
     title: "React & Next.js Mastery",
     description: "Build modern web applications",
     price: "$149",
+    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
+    author: {
+      name: "Michael Chen",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80",
+      role: "Lead Frontend Engineer"
+    },
+    progress: 0,
+    totalLessons: 32,
+    completedLessons: 0,
+    docsUrl: "https://docs.example.com/react-nextjs"
   },
   {
     title: "Full Stack Development",
     description: "End-to-end application development",
     price: "$199",
-  },
+    image: "https://images.unsplash.com/photo-1607706189992-eae578626c86?q=80&w=2070&auto=format&fit=crop",
+    author: {
+      name: "Emily Rodriguez",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80",
+      role: "Full Stack Developer"
+    },
+    progress: 20,
+    totalLessons: 40,
+    completedLessons: 0,
+    docsUrl: "https://docs.example.com/fullstack"
+  }
 ];
 
 export default function Home() {
@@ -131,36 +161,17 @@ export default function Home() {
 
       {/* Courses Section */}
       <section className="py-20 bg-secondary/50">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Featured Courses
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {courses.map((course, index) => (
-              <Card
-                key={index}
-                className="group border-border/50 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-              >
-                <CardHeader>
-                  <div className="h-2 w-20 rounded-full bg-primary/20 mb-4" />
-                  <CardTitle className="text-xl group-hover:text-primary transition-colors duration-300">
-                    {course.title}
-                  </CardTitle>
-                  <CardDescription>{course.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-primary">
-                    {course.price}
-                  </span>
-                  <Button className="bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-300">
-                    Enroll Now
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+      <div className="max-w-7xl mx-auto px-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          Featured Courses
+        </h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {courses.map((course, index) => (
+            <CourseCard key={index} {...course} />
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
     </main>
   );
 }

@@ -1,3 +1,4 @@
+import { Course } from "../../../../sanity.types";
 import { sanityFetch } from "../live";
 import { defineQuery } from "groq";
 

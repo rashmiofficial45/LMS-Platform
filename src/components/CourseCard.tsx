@@ -8,6 +8,9 @@ import { BookOpen, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { GetCoursesQueryResult } from "../../sanity.types";
+import Link from "next/link";
+import { urlFor } from "@/sanity/lib/image";
 
 interface Author {
     name: string;
@@ -16,118 +19,117 @@ interface Author {
 }
 
 interface CourseCardProps {
-    title: string;
-    description: string;
-    price: string;
-    image: string;
-    author: Author;
+    course: GetCoursesQueryResult[number],
     progress: number;
-    totalLessons: number;
-    completedLessons: number;
-    docsUrl: string;
+    href: string;
 }
 
 export function CourseCard({
-    title,
-    description,
-    price,
-    image,
-    author,
-    progress,
-    totalLessons,
-    completedLessons,
-    docsUrl
-}: CourseCardProps) {
+    course, progress, href
+}
+    : CourseCardProps) {
     return (
-        <motion.div
-            whileHover={{
-                scale: 1.02,
-                rotateY: 5,
-                translateZ: 20
-            }}
-            transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 20
-            }}
-            className="perspective-1000"
-        >
-            <Card className="group border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl overflow-hidden max-w-sm mx-auto">
-                <div className="relative h-40 w-full overflow-hidden">
-                    <Image
-                        src={image}
-                        alt={title}
-                        fill
-                        className="object-cover transform group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                </div>
+        // <motion.div
+        //     whileHover={{
+        //         scale: 1.02,
+        //         rotateY: 5,
+        //         translateZ: 20
+        //     }}
+        //     transition={{
+        //         type: "spring",
+        //         stiffness: 300,
+        //         damping: 20
+        //     }}
+        //     className="perspective-1000"
+        // >
+            <Link href={href}>
+                <Card className="mx-auto">
+                    <div className="relative h-50 w-full ">
+                        {course.image && course.description ? (
+                            <Image
+                                src={urlFor(course.image).url() || ""}
+                                alt={course.description}
+                                fill
+                                className="object-cover"
+                            />) : null}
+                    </div>
 
-                <CardHeader className="space-y-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                            <Avatar className="h-8 w-8">
-                                <AvatarImage src={author.avatar} alt={author.name} />
-                                <AvatarFallback>{author.name[0]}</AvatarFallback>
-                            </Avatar>
-                            <div className="space-y-1">
-                                <h4 className="text-sm font-semibold leading-none">{author.name}</h4>
-                                <p className="text-xs text-muted-foreground">{author.role}</p>
+                    <CardHeader className="space-y-1">
+                        <div>
+                            <CardTitle className="text-lg font-semibold">
+                                {course.title}
+                            </CardTitle>
+                            {/* <CardDescription className="mt-2 text-sm">{course.description}</CardDescription> */}
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                                {course.instructor?.photo && course.instructor?.name ? (
+                                    <Avatar className="h-6 w-6">
+                                        <AvatarImage src={urlFor(course.instructor?.photo).url() || course.instructor?.name[0]}
+                                            alt={" by " + course.instructor?.name ||
+                                                " by Ananomous Instructor"
+                                            } />
+                                        <AvatarFallback>{course.instructor?.name[0]}</AvatarFallback>
+                                    </Avatar>
+                                ) : null}
+                                <div className="space-y-1">
+                                    <h4 className="text-muted-foreground text-sm">by {course.instructor?.name}</h4>
+                                </div>
+                            </div>
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        {!course.modules ? null : (<Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-8 w-8"
+                                            onClick={() => window.open(course.modules[0]?._ref || '', '_blank')}
+                                        >
+                                            <FileText className="h-4 w-4" />
+                                        </Button>
+                                        )}
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Course Modules</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                                {"price" in course && typeof course.price === "number" && (
+                                    <span className="text-lg font-bold text-primary">{
+                                        course.price === 0 ? "Free" : `$${course.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}`
+                                    }
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="flex items-center space-x-3">
+
+                                <Button
+                                    size="sm"
+                                    className="bg-primary text-primary-foreground hover:bg-primary/90 "
+                                >
+                                    Enroll
+                                </Button>
                             </div>
                         </div>
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="h-8 w-8"
-                                        onClick={() => window.open(docsUrl, '_blank')}
-                                    >
-                                        <FileText className="h-4 w-4" />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <p>Course Documentation</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                    </div>
-
-                    <div>
-                        <CardTitle className="text-lg group-hover:text-primary transition-colors duration-300">
-                            {title}
-                        </CardTitle>
-                        <CardDescription className="mt-2 text-sm">{description}</CardDescription>
-                    </div>
-
-                    <div className="space-y-2">
-                        <div className="flex items-center justify-between text-xs">
-                            <span className="text-muted-foreground">Course Progress</span>
-                            <span className="font-medium">{completedLessons}/{totalLessons} lessons</span>
+                    </CardContent>
+                    {/* <CardContent>
+                        <div className="space-y-2">
+                            <div className="flex items-center justify-between text-xs ">
+                                <span className="text-muted-foreground">Course Progress</span>
+                                <span className="font-medium">{completedLessons}/{totalLessons} lessons</span>
+                            </div>
+                            <Progress value={progress} className="h-1" />
                         </div>
-                        <Progress value={progress} className="h-1" />
-                    </div>
-                </CardHeader>
-
-                <CardContent>
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                            <BookOpen className="h-4 w-4 text-muted-foreground" />
-                            <span className="text-sm font-medium">{totalLessons} Lessons</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                            <span className="text-lg font-bold text-primary">{price}</span>
-                            <Button
-                                size="sm"
-                                className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 transform group-hover:translate-x-1"
-                            >
-                                Enroll
-                            </Button>
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
-        </motion.div>
+                    </CardContent> */}
+                </Card>
+            </Link>
+        // </motion.div>
     );
 }
+

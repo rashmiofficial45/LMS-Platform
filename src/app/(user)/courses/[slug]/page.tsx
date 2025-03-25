@@ -1,6 +1,7 @@
 import EnrollButton from '@/components/EnrollButton';
 import getCourseBySlug from '@/sanity/lib/courses/getCoursesBySlug';
 import { urlFor } from '@/sanity/lib/image';
+import { isEnrolledInCourse } from '@/sanity/lib/student/isEnrolledInCourse';
 import { auth } from '@clerk/nextjs/server';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import Image from 'next/image';
@@ -17,8 +18,7 @@ const CoursePage = async ({ params }: CoursePageProps) => {
     const { slug } = await params;
     const course = await getCourseBySlug(slug);
     const { userId } = await auth();
-    const isEnrolled = false;
-    // userId && course?._id ? await isEnrolledInCourse(userId, course._id) : false;
+    const isEnrolled = userId && course?._id ? await isEnrolledInCourse(userId, course._id) : false;
 
     if (!course) {
         return (

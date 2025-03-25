@@ -1,3 +1,4 @@
+import EnrollButton from '@/components/EnrollButton';
 import getCourseBySlug from '@/sanity/lib/courses/getCoursesBySlug';
 import { urlFor } from '@/sanity/lib/image';
 import { auth } from '@clerk/nextjs/server';
@@ -16,7 +17,8 @@ const CoursePage = async ({ params }: CoursePageProps) => {
     const { slug } = await params;
     const course = await getCourseBySlug(slug);
     const { userId } = await auth();
-    // const isEnrolled = userId && course?._id ? await isEnrolledInCourse(userId, course._id) : false;
+    const isEnrolled = false;
+    // userId && course?._id ? await isEnrolledInCourse(userId, course._id) : false;
 
     if (!course) {
         return (
@@ -66,7 +68,7 @@ const CoursePage = async ({ params }: CoursePageProps) => {
                             <div className="text-3xl font-bold text-white mb-4">
                                 {course.price === 0 ? "Free" : `$${course.price}`}
                             </div>
-                            {/* <EnrollButton courseId={course._id} isEnrolled={isEnrolled} /> */}
+                            <EnrollButton courseId={course._id} isEnrolled={isEnrolled} />
                         </div>
                     </div>
                 </div>
@@ -158,4 +160,4 @@ const CoursePage = async ({ params }: CoursePageProps) => {
 };
 
 
-                    export default CoursePage
+export default CoursePage

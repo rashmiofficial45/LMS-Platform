@@ -54,7 +54,7 @@ export default async function Home() {
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-muted-foreground max-w-3xl mx-auto">
               Access world-class education and unlock your potential with our
-              professional development courses.
+          professional development courses.
             </p>
             <div className="flex gap-4 justify-center">
               <Button

@@ -14,9 +14,9 @@ export default async function createStripeCheckout(
   //query the course details from sanity
   try {
     const course = await getCourseById(courseId);
-//     console.log(course?.price);
-//     console.log("Fetching Clerk user for userId:", userId);
-// console.log("Fetching course Id:", courseId);
+    //     console.log(course?.price);
+    //     console.log("Fetching Clerk user for userId:", userId);
+    // console.log("Fetching course Id:", courseId);
 
     const clerk = await clerkClient();
     const clerkUser = await clerk.users.getUser(userId);
@@ -44,9 +44,9 @@ export default async function createStripeCheckout(
       throw new Error("User creation failed");
     }
 
-if (course.price === undefined || course.price === null) {
-  throw new Error("Course price is not set");
-}
+    if (course.price === undefined || course.price === null) {
+      throw new Error("Course price is not set");
+    }
 
     const priceInCents = Math.round(course.price * 100);
 

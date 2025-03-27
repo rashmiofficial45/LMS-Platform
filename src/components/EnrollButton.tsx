@@ -6,6 +6,7 @@ import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import createStripeCheckout from "../../action/createStripeCheckout";
 
 function EnrollButton({
     courseId,
@@ -24,12 +25,12 @@ function EnrollButton({
                 const userId = user?.id;
                 if (!userId) return;
 
-                // const { url } = await createStripeCheckout(courseId, userId);
-                // if (url) {
-                //     router.push(url);
-                // }
+                const { url } = await createStripeCheckout(userId,courseId);
+                if (url) {
+                    router.push(url);
+                }
             } catch (error) {
-                console.error("Error in handleEnroll:", error);
+                console.log("Error in handleEnroll:", error);
                 throw new Error("Failed to create checkout session");
             }
         });

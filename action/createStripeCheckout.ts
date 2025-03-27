@@ -14,50 +14,58 @@ export default async function createStripeCheckout(
   //query the course details from sanity
   try {
     const course = await getCourseById(courseId);
-    const clerkUser = await(await clerkClient()).users.getUser(userId);
+//     console.log(course?.price);
+//     console.log("Fetching Clerk user for userId:", userId);
+// console.log("Fetching course Id:", courseId);
+
+    const clerk = await clerkClient();
+    const clerkUser = await clerk.users.getUser(userId);
     const { emailAddresses, firstName, lastName, imageUrl } = clerkUser;
-    const email = emailAddresses[0]?.emailAddress;
+    // console.log("Clerk user data:", { emailAddresses, firstName, lastName, imageUrl });
+    const email = emailAddresses?.[0]?.emailAddress;
+    if (!email || !emailAddresses) {
+      throw new Error("User email not found in Clerk");
+    }
+
+    // Ensure course exists
     if (!course) {
-      throw new Error("Course not found ");
+      throw new Error("Course not found");
     }
-    if (!email) {
-      throw new Error("User email not found");
-    }
+
     const user = await createStudentIfNotExists({
       clerkId: userId,
-      email: email || "",
+      email,
       firstName: firstName || email,
       lastName: lastName || "",
       imageUrl,
     });
+
     if (!user) {
-      throw new Error("User not found");
+      throw new Error("User creation failed");
     }
 
-    // 2. Validate course data and prepare price for Stripe
-    if (!course.price || course.price !== 0) {
-      throw new Error("Course price is not set");
-    }
+if (course.price === undefined || course.price === null) {
+  throw new Error("Course price is not set");
+}
+
     const priceInCents = Math.round(course.price * 100);
-    // if course is free, create enrollment and redirect to course page (BYPASS STRIPE CHECKOUT)
+
     if (priceInCents === 0) {
       await createEnrollment({
         studentId: userId,
-        courseId: courseId,
+        courseId,
         amount: 0,
         paymentId: "free",
       });
-      return {
-        url: `/courses/${course.slug?.current}`,
-      };
+      return { url: `/courses/${course.slug?.current}` };
     }
+
     const { title, description, image, slug } = course;
-
+    // console.log("Course data:", { title, description, image, slug, price });
     if (!title || !description || !image || !slug) {
-      throw new Error("Course data is incomplete");
+      throw new Error("Incomplete course data");
     }
 
-    // 3. Create and configure Stripe Checkout Session with course details
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -65,7 +73,7 @@ export default async function createStripeCheckout(
             currency: "usd",
             product_data: {
               name: title,
-              description: description,
+              description,
               images: [urlFor(image).url() || ""],
             },
             unit_amount: priceInCents,
@@ -76,12 +84,10 @@ export default async function createStripeCheckout(
       mode: "payment",
       success_url: `${baseUrl}/courses/${slug.current}`,
       cancel_url: `${baseUrl}/courses/${slug.current}?canceled=true`,
-      metadata: {
-        courseId: course._id,
-        userId: userId,
-      },
+      metadata: { courseId: course._id, userId },
     });
-    return {url : session.url}
+
+    return { url: session.url };
   } catch (error) {
     console.error("Error in createStripeCheckout:", error);
     throw new Error("Failed to create checkout session");

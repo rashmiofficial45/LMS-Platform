@@ -33,7 +33,9 @@ const Header = (props: Props) => {
                 className="cursor-pointer md:border-1"
               >
                 <FolderHeart className="h-5 w-5" />
-                <span className="hidden md:block">My Courses</span>
+                <Link href={"/my-courses"}>
+                  <span className="hidden md:block">My Courses</span>
+                </Link>
               </Button>
             </SignedIn>
             <SignedOut>

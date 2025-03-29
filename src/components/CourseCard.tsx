@@ -20,12 +20,12 @@ interface Author {
 
 interface CourseCardProps {
     course: GetCoursesQueryResult[number],
-    // progress: number;
+    progress: number;
     href: string;
 }
 
 export function CourseCard({
-    course, href
+    course, href , progress
 }
     : CourseCardProps) {
     return (
@@ -102,13 +102,17 @@ export function CourseCard({
                 ))}
               </div> */}
                     {/* </div> */}
-                    {/* <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-muted-foreground">Progress</span>
-                <span className="font-medium">{course.progress}%</span>
-              </div>
-              <Progress value={course.progress} className="h-1" />
-            </div> */}
+                    {
+                    typeof progress === 'number' ?
+                    (<>
+                        <div className="space-y-2 px-6">
+                            <div className="flex items-center justify-between text-xs">
+                                <span className="text-muted-foreground">Progress</span>
+                                <span className="font-medium">{progress}%</span>
+                            </div>
+                            <Progress value={progress} className="h-1" />
+                        </div></>):(<></>)
+                    }
                 {/* </CardContent>
         )} */}
             </Card>

@@ -15,7 +15,7 @@ export default function UserLayout({
 }>) {
     return (
         <ClerkProvider>
-            <SidebarProvider>j
+            <SidebarProvider>
                 <div className="h-full">
                     {children}
                 </div>

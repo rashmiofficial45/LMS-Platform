@@ -16,7 +16,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
     }
 
     // Redirect to the first lesson of the first module if available
-    if (course.modules?.[0]?.lessons?.[0]?._id) {
+    if (course.modules?.[0].lessons?.[0]._id) {
         return redirect(
             `/dashboard/courses/${courseId}/lessons/${course.modules[0].lessons[0]._id}`
         );
@@ -27,7 +27,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
             <div className="text-center">
                 <h2 className="text-2xl font-bold">Welcome to {course.title}</h2>
                 <p className="text-muted-foreground">
-                    This course has no content yet. Please check back later.
+                    This course has no lessons yet. Please check back later.
                 </p>
             </div>
         </div>

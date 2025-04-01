@@ -1,6 +1,5 @@
 "use client";
 
-// import { createStripeCheckout } from "@/actions/createStripeCheckout";
 import { useUser } from "@clerk/nextjs";
 import { CheckCircle } from "lucide-react";
 import Link from "next/link";
@@ -47,6 +46,7 @@ function EnrollButton({
 
     // Show enrolled state with link to course
     if (isEnrolled) {
+        console.log("trying isEnrolled")
         return (
             <Link
                 prefetch={false}

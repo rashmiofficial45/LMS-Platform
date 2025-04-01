@@ -86,7 +86,12 @@ export default async function createStripeCheckout(
       cancel_url: `${baseUrl}/courses/${slug.current}?canceled=true`,
       metadata: { courseId: course._id, userId },
     });
-
+    console.log(
+      "Attempting to create enrollment for user:",
+      userId,
+      "Course:",
+      courseId
+    );
     return { url: session.url };
   } catch (error) {
     console.error("Error in createStripeCheckout:", error);

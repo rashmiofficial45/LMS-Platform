@@ -5,6 +5,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { getLessonById } from "@/sanity/lib/lesson/getLessonById";
 import { LessonCompleteButton } from "@/components/LessonCompleteButton";
 import { PortableText } from "next-sanity";
+import VideoPlayer from "@/components/VideoPlayer";
 
 interface LessonPageProps {
   params: Promise<{
@@ -33,9 +34,9 @@ export default async function LessonPage({ params }: LessonPageProps) {
             <p className="text-muted-foreground mb-8">{lesson.description}</p>
           )}
 
-          {/* <div className="space-y-8">
+          <div className="space-y-8">
             Video Section
-            {lesson.videoUrl && <VideoPlayer url={lesson.videoUrl} />} */}
+            {lesson.videoUrl && <VideoPlayer url={lesson.videoUrl} />}
 
             {/* Loom Embed Video if loomUrl is provided */}
             {/* {lesson.loomUrl && <LoomEmbed shareUrl={lesson.loomUrl} />} */}
@@ -56,6 +57,6 @@ export default async function LessonPage({ params }: LessonPageProps) {
           </div>
         </div>
       </div>
-    // </div>
+     </div>
   );
 }

@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
-// import { PortableText } from "@portabletext/react";
 // import { LoomEmbed } from "@/components/LoomEmbed";
 // import { VideoPlayer } from "@/components/VideoPlayer";
 import { getLessonById } from "@/sanity/lib/lesson/getLessonById";
 import { LessonCompleteButton } from "@/components/LessonCompleteButton";
+import { PortableText } from "next-sanity";
 
 interface LessonPageProps {
   params: Promise<{
@@ -41,14 +41,14 @@ export default async function LessonPage({ params }: LessonPageProps) {
             {/* {lesson.loomUrl && <LoomEmbed shareUrl={lesson.loomUrl} />} */}
 
             {/* Lesson Content */}
-            {/* {lesson.content && (
+            {lesson.content && (
               <div>
                 <h2 className="text-xl font-semibold mb-4">Lesson Notes</h2>
                 <div className="prose prose-blue dark:prose-invert max-w-none">
                   <PortableText value={lesson.content} />
                 </div>
               </div>
-            )} */}
+            )}
 
             <div className="flex justify-end">
               <LessonCompleteButton lessonId={lesson._id} clerkId={user!.id} />

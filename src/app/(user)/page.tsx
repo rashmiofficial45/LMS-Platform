@@ -15,6 +15,8 @@ import {
   Users,
   ArrowRight,
 } from "lucide-react";
+export const dynamic = "force-static";
+export const revalidate = 3600; // revalidate at most every hour
 const features = [
   {
     icon: <BookOpen className="h-6 w-6" />,

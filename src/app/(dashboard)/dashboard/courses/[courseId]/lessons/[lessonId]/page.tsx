@@ -1,11 +1,10 @@
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
-// import { LoomEmbed } from "@/components/LoomEmbed";
-// import { VideoPlayer } from "@/components/VideoPlayer";
 import { getLessonById } from "@/sanity/lib/lesson/getLessonById";
 import { LessonCompleteButton } from "@/components/LessonCompleteButton";
 import { PortableText } from "next-sanity";
 import VideoPlayer from "@/components/VideoPlayer";
+import { LoomEmbed } from "@/components/LoomEmbed";
 
 interface LessonPageProps {
   params: Promise<{
@@ -33,13 +32,13 @@ export default async function LessonPage({ params }: LessonPageProps) {
           {lesson.description && (
             <p className="text-muted-foreground mb-8">{lesson.description}</p>
           )}
-
+            {/* feat: We must integrate with MUX for the video streaming which is paid  */}
           <div className="space-y-8">
             Video Section
             {lesson.videoUrl && <VideoPlayer url={lesson.videoUrl} />}
 
             {/* Loom Embed Video if loomUrl is provided */}
-            {/* {lesson.loomUrl && <LoomEmbed shareUrl={lesson.loomUrl} />} */}
+            {lesson.loomUrl && <LoomEmbed shareUrl={lesson.loomUrl} />}
 
             {/* Lesson Content */}
             {lesson.content && (

@@ -20,7 +20,7 @@ interface Author {
 
 interface CourseCardProps {
     course: GetCoursesQueryResult[number],
-    progress: number;
+    progress?: number;
     href: string;
 }
 

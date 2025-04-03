@@ -4,10 +4,10 @@ import { Module, ProgressQueryResult } from "../../sanity.types";
 
 export function calculateTotalLessons(modules: Module[] | null): number {
   if (!modules) return 0;
-  return modules.reduce(
-    (acc, module) => acc + (module.lessons?.length || 0),
-    0
-  );
+  return modules
+    .filter((module) => module !== null && module !== undefined)
+    .reduce((acc, module) => acc + (module.lessons?.length || 0), 0);
+
 }
 
 export function calculateCourseProgress(

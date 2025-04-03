@@ -1,8 +1,8 @@
+"use client";
 import React from 'react'
 import ReactPlayer from 'react-player'
 
 
-// "use client";
 
 // import dynamic from "next/dynamic";
 

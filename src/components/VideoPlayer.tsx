@@ -1,12 +1,10 @@
 "use client";
 import React from 'react'
-import ReactPlayer from 'react-player'
+// import ReactPlayer from 'react-player'
 
+import dynamic from "next/dynamic";
 
-
-// import dynamic from "next/dynamic";
-
-// const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
+const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 interface VideoPlayerProps {
     url: string
 }

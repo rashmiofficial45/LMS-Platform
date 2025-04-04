@@ -5,10 +5,6 @@ import { getStudentByClerkId } from "@/sanity/lib/student/getStudentByClerkId";
 import { createEnrollment } from "@/sanity/lib/student/createEnrollment";
 import stripe from "@/lib/stripe";
 
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-//   apiVersion: "2025-02-24.acacia" as Stripe.LatestApiVersion,
-// });
-
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(req: Request) {

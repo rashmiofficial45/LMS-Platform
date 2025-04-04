@@ -1,13 +1,12 @@
 "use client";
 import React from 'react'
-// import ReactPlayer from 'react-player'
-
 import dynamic from "next/dynamic";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 interface VideoPlayerProps {
     url: string
 }
+
 // Render a YouTube video player
 export default function VideoPlayer({ url }: VideoPlayerProps) {
     return (  // <-- Added return statement
@@ -21,5 +20,4 @@ export default function VideoPlayer({ url }: VideoPlayerProps) {
             />
         </div>
     );
-
 }

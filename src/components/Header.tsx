@@ -8,9 +8,7 @@ import { BookHeart, FolderHeart, LogIn } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import SearchInput from "./SearchInput";
 
-type Props = {};
-
-const Header = (props: Props) => {
+const Header = () => {
   return (
     <header className="sticky top-0 z-50 md:px-4 py-2 bg-background shadow-sm border-b border-gray-200 dark:border-gray-800 rounded-b-lg">
       <div className="flex items-center justify-between container mx-auto">

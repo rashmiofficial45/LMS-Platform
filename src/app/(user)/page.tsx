@@ -111,7 +111,7 @@ export default async function Home() {
           Featured Courses
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {courses.map((course, index) => (
+          {courses.map((course) => (
             <CourseCard key={course._id} course={course} href={`/courses/${course.slug}`} />
           ))}
         </div>

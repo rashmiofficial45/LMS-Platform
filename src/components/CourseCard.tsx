@@ -1,21 +1,12 @@
 "use client"
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { BookOpen, FileText } from "lucide-react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { GetCoursesQueryResult } from "../../sanity.types";
 import Link from "next/link";
 import { urlFor } from "@/sanity/lib/image";
-
-interface Author {
-    name: string;
-    avatar: string;
-    role: string;
-}
 
 interface CourseCardProps {
     course: GetCoursesQueryResult[number],

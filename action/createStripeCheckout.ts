@@ -14,14 +14,11 @@ export default async function createStripeCheckout(
   //query the course details from sanity
   try {
     const course = await getCourseById(courseId);
-    //     console.log(course?.price);
-    //     console.log("Fetching Clerk user for userId:", userId);
-    // console.log("Fetching course Id:", courseId);
 
     const clerk = await clerkClient();
     const clerkUser = await clerk.users.getUser(userId);
     const { emailAddresses, firstName, lastName, imageUrl } = clerkUser;
-    // console.log("Clerk user data:", { emailAddresses, firstName, lastName, imageUrl });
+
     const email = emailAddresses?.[0]?.emailAddress;
     if (!email || !emailAddresses) {
       throw new Error("User email not found in Clerk");

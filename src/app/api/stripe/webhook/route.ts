@@ -6,12 +6,16 @@ import { createEnrollment } from "@/sanity/lib/student/createEnrollment";
 import stripe from "@/lib/stripe";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export async function POST(req: Request) {
   try {
     const body = await req.text();
-    const headersList = await headers();
-    const signature = headersList.get("stripe-signature");
+    const signature = req.headers.get("stripe-signature");
 
     if (!signature) {
       return new NextResponse("No signature found", { status: 400 });
@@ -38,9 +42,10 @@ export async function POST(req: Request) {
       // Get the courseId and userId from the metadata
       const courseId = session.metadata?.courseId;
       const userId = session.metadata?.userId;
-
+      console.log(courseId,"couseId")
+      console.log(courseId,"userId")
       if (!courseId || !userId) {
-        return new NextResponse("Missing metadata", { status: 400 });
+        return new NextResponse("Missing metadata", { status: 404 });
       }
 
       const student = await getStudentByClerkId(userId);
@@ -56,7 +61,7 @@ export async function POST(req: Request) {
         paymentId: session.id,
         amount: session.amount_total! / 100, // Convert from cents to dollars
       });
-
+      console.log("📦 Stripe Event:", JSON.stringify(event, null, 2));
       return new NextResponse(null, { status: 200 });
     }
 

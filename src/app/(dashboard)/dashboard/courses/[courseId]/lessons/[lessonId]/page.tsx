@@ -6,6 +6,60 @@ import { PortableText } from "next-sanity";
 import VideoPlayer from "@/components/VideoPlayer";
 import { LoomEmbed } from "@/components/LoomEmbed";
 
+// Define components for PortableText
+const portableTextComponents = {
+  types: {
+    block: ({ children, value }: any) => {
+      const { style = 'normal' } = value;
+
+      if (style === 'h1') {
+        return <h1 className="text-3xl font-bold mb-4 mt-8">{children}</h1>;
+      }
+      if (style === 'h2') {
+        return <h2 className="text-2xl font-bold mb-3 mt-6">{children}</h2>;
+      }
+      if (style === 'h3') {
+        return <h3 className="text-xl font-semibold mb-2 mt-4">{children}</h3>;
+      }
+      if (style === 'h4') {
+        return <h4 className="text-lg font-semibold mb-2 mt-4">{children}</h4>;
+      }
+      if (style === 'blockquote') {
+        return <blockquote className="border-l-4 border-blue-500 pl-4 italic my-4">{children}</blockquote>;
+      }
+      if (style === 'normal') {
+        return <p className="mb-4 leading-relaxed">{children}</p>;
+      }
+
+      // Default fallback
+      return <p className="mb-4">{children}</p>;
+    },
+  },
+  marks: {
+    link: ({ children, value }: any) => {
+      const { href } = value;
+      return (
+        <a
+          href={href}
+          className="text-blue-600 hover:text-blue-800 underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {children}
+        </a>
+      );
+    },
+    strong: ({ children }: any) => <strong className="font-bold">{children}</strong>,
+    em: ({ children }: any) => <em className="italic">{children}</em>,
+    code: ({ children }: any) => <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm font-mono">{children}</code>,
+  },
+  list: {
+    bullet: ({ children }: any) => <ul className="list-disc list-inside mb-4 space-y-1">{children}</ul>,
+    number: ({ children }: any) => <ol className="list-decimal list-inside mb-4 space-y-1">{children}</ol>,
+  },
+  listItem: ({ children }: any) => <li className="ml-4">{children}</li>,
+};
+
 interface LessonPageProps {
   params: Promise<{
     courseId: string;
@@ -32,7 +86,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
           {lesson.description && (
             <p className="text-muted-foreground mb-8">{lesson.description}</p>
           )}
-            {/* feat: We must integrate with MUX for the video streaming which is paid  */}
+          {/* feat: We must integrate with MUX for the video streaming which is paid  */}
           <div className="space-y-8">
             Video Section
             {lesson.videoUrl && <VideoPlayer url={lesson.videoUrl} />}
@@ -45,7 +99,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
               <div>
                 <h2 className="text-xl font-semibold mb-4">Lesson Notes</h2>
                 <div className="prose prose-blue dark:prose-invert max-w-none">
-                  <PortableText value={lesson.content} />
+                  <PortableText value={lesson.content} components={portableTextComponents} />
                 </div>
               </div>
             )}
@@ -56,6 +110,6 @@ export default async function LessonPage({ params }: LessonPageProps) {
           </div>
         </div>
       </div>
-     </div>
+    </div>
   );
 }

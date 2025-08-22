@@ -4,7 +4,6 @@ import { CheckCircle, Loader2, XCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
-// import { completeLessonAction } from "@/app/actions/completeLessonAction";
 
 import { cn } from "@/lib/utils";
 import { completeLessonAction } from "@/app/action/CompleteLessonAction";

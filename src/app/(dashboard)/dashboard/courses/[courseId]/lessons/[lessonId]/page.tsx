@@ -11,7 +11,6 @@ const portableTextComponents = {
   types: {
     block: ({ children, value }: any) => {
       const { style = 'normal' } = value;
-
       if (style === 'h1') {
         return <h1 className="text-3xl font-bold mb-4 mt-8">{children}</h1>;
       }

@@ -6,10 +6,24 @@ import { PortableText } from "next-sanity";
 import VideoPlayer from "@/components/VideoPlayer";
 import { LoomEmbed } from "@/components/LoomEmbed";
 
+// Define interfaces for PortableText component values
+interface BlockValue {
+  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+  listItem?: "bullet" | "number";
+  _type: "block";
+  _key: string;
+}
+
+interface LinkValue {
+  href: string;
+  _type: "link";
+  _key: string;
+}
+
 // Define components for PortableText
 const portableTextComponents = {
   types: {
-    block: ({ children, value }: any) => {
+    block: ({ children, value }: { children: React.ReactNode; value: BlockValue }) => {
       const { style = 'normal' } = value;
       if (style === 'h1') {
         return <h1 className="text-3xl font-bold mb-4 mt-8">{children}</h1>;
@@ -35,7 +49,7 @@ const portableTextComponents = {
     },
   },
   marks: {
-    link: ({ children, value }: any) => {
+    link: ({ children, value }: { children: React.ReactNode; value: LinkValue }) => {
       const { href } = value;
       return (
         <a
@@ -48,15 +62,15 @@ const portableTextComponents = {
         </a>
       );
     },
-    strong: ({ children }: any) => <strong className="font-bold">{children}</strong>,
-    em: ({ children }: any) => <em className="italic">{children}</em>,
-    code: ({ children }: any) => <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm font-mono">{children}</code>,
+    strong: ({ children }: { children: React.ReactNode }) => <strong className="font-bold">{children}</strong>,
+    em: ({ children }: { children: React.ReactNode }) => <em className="italic">{children}</em>,
+    code: ({ children }: { children: React.ReactNode }) => <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm font-mono">{children}</code>,
   },
   list: {
-    bullet: ({ children }: any) => <ul className="list-disc list-inside mb-4 space-y-1">{children}</ul>,
-    number: ({ children }: any) => <ol className="list-decimal list-inside mb-4 space-y-1">{children}</ol>,
+    bullet: ({ children }: { children: React.ReactNode }) => <ul className="list-disc list-inside mb-4 space-y-1">{children}</ul>,
+    number: ({ children }: { children: React.ReactNode }) => <ol className="list-decimal list-inside mb-4 space-y-1">{children}</ol>,
   },
-  listItem: ({ children }: any) => <li className="ml-4">{children}</li>,
+  listItem: ({ children }: { children: React.ReactNode }) => <li className="ml-4">{children}</li>,
 };
 
 interface LessonPageProps {
@@ -98,7 +112,8 @@ export default async function LessonPage({ params }: LessonPageProps) {
               <div>
                 <h2 className="text-xl font-semibold mb-4">Lesson Notes</h2>
                 <div className="prose prose-blue dark:prose-invert max-w-none">
-                  <PortableText value={lesson.content} components={portableTextComponents} />
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  <PortableText value={lesson.content} components={portableTextComponents as any} />
                 </div>
               </div>
             )}

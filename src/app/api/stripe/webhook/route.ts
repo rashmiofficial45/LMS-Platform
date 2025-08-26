@@ -4,6 +4,10 @@ import { getStudentByClerkId } from "@/sanity/lib/student/getStudentByClerkId";
 import { createEnrollment } from "@/sanity/lib/student/createEnrollment";
 import stripe from "@/lib/stripe";
 
+// Ensure this route runs on the Node.js runtime (required for Stripe SDK)
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 export const config = {
   api: {
@@ -41,8 +45,8 @@ export async function POST(req: Request) {
       // Get the courseId and userId from the metadata
       const courseId = session.metadata?.courseId;
       const userId = session.metadata?.userId;
-      console.log(courseId,"couseId")
-      console.log(courseId,"userId")
+      console.log("courseId:", courseId);
+      console.log("userId:", userId);
       if (!courseId || !userId) {
         return new NextResponse("Missing metadata", { status: 404 });
       }
@@ -67,6 +71,9 @@ export async function POST(req: Request) {
     return new NextResponse(null, { status: 200 });
   } catch (error) {
     console.error("Error in webhook handler:", error);
-    return new NextResponse("Webhook handler failed", { status: 500 });
+    const message = error instanceof Error ? error.message : "Unknown error";
+    return new NextResponse(`Webhook handler failed: ${message}` as any, {
+      status: 500,
+    });
   }
 }

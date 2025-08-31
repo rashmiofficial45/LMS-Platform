@@ -9,6 +9,8 @@ A modern, open-source Learning Management System (LMS) built with Next.js 15, Sa
 [![Stripe](https://img.shields.io/badge/Stripe-17.7.0-008CDD?style=for-the-badge&logo=stripe)](https://stripe.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
+---
+
 ## ✨ Features
 
 - 🎯 **Course Management**: Create, edit, and organize courses with modules and lessons
@@ -22,6 +24,27 @@ A modern, open-source Learning Management System (LMS) built with Next.js 15, Sa
 - 📝 **Rich Content**: Rich text editing with PortableText
 - 🚀 **Performance**: Built with Next.js 15 and Turbopack for optimal performance
 
+---
+
+## 📸 Demo Images
+
+### 📊 Dashboard & Progress Tracking
+![Dashboard](./public/dashboard.png)
+
+### 🔐 MyCourse Section
+![MyCourse Section](./public/mycourses.png)
+
+### 📚 Course Catalog
+![Course Catalog](./public/courses.jpeg)
+
+### 📝 Course Details & Lessons
+![Course Details](./public/course-content.jpeg)
+
+### 💳 Checkout & Payments (Stripe)
+![Stripe Checkout](./public/stripe.png)
+
+---
+
 ## 🏗️ Architecture
 
 - **Frontend**: Next.js 15 with App Router
@@ -32,6 +55,21 @@ A modern, open-source Learning Management System (LMS) built with Next.js 15, Sa
 - **Styling**: Tailwind CSS
 - **State Management**: React hooks and context
 - **Type Safety**: TypeScript
+
+---
+
+## ✨ Features
+
+- 🎯 **Course Management**: Create, edit, and organize courses with modules and lessons
+- 👥 **User Authentication**: Secure authentication with Clerk
+- 💳 **Payment Processing**: Integrated Stripe payments for course enrollment
+- 📱 **Responsive Design**: Mobile-first design with Tailwind CSS
+- 🎨 **Modern UI**: Beautiful interface with dark/light mode support
+- 📊 **Progress Tracking**: Monitor student progress through courses
+- 🎥 **Video Support**: Embed videos from YouTube, Loom, and other platforms
+- 🔍 **Search Functionality**: Find courses quickly with search capabilities
+- 📝 **Rich Content**: Rich text editing with PortableText
+- 🚀 **Performance**: Built with Next.js 15 and Turbopack for optimal performance
 
 ## 🚀 Quick Start
 
